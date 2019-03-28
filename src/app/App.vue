@@ -12,7 +12,8 @@ export * from './user.service';
 </template>
 
 <script>
+
     export default {
         name: 'app'
-    };
+    }
 </script>

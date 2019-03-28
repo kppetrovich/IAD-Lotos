@@ -12,12 +12,6 @@
                 <b-navbar-nav>
                     <b-nav-item href="#"></b-nav-item>
                     <div>
-                        <b-dropdown id="ddown-dropright" text="Add"  class="m-1">
-                            <b-dropdown-item href="#" @click.prevent="loadAddParent">Parent</b-dropdown-item>
-                            <b-dropdown-item href="#" @click.prevent="loadAddChild">Child</b-dropdown-item>
-                            <b-dropdown-item href="#" @click.prevent="loadAddItem">Item</b-dropdown-item>
-                            <b-dropdown-item href="#" @click.prevent="loadAddEmployee">Employee</b-dropdown-item>
-                        </b-dropdown>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadSearch">Search</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadMessages">Messages</b-button>
                     </div>
@@ -26,7 +20,7 @@
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-dropdown id="ddown-dropright"  text="User"  class="m-1">
-                        <b-dropdown-item href="#"><router-link to="/ChiefCabinet">Profile</router-link></b-dropdown-item>
+                        <b-dropdown-item href="#"><router-link to="/BabysitterCabinet">Profile</router-link></b-dropdown-item>
                         <b-dropdown-item  href="#"><router-link to="/login">Logout</router-link></b-dropdown-item>
                     </b-dropdown>
                 </b-navbar-nav>
@@ -50,19 +44,6 @@
         methods: {
             loadMessages: function () {
                 EventBus.$emit('load', 'Messages');
-            },
-            loadAddParent: function () {
-                EventBus.$emit('load', 'AddParent')
-
-            },
-            loadAddChild: function () {
-                EventBus.$emit('load', 'AddChild')
-            },
-            loadAddEmployee: function () {
-                EventBus.$emit('load', 'AddEmployee')
-            },
-            loadAddItem: function () {
-                EventBus.$emit('load', 'AddItem')
             },
             loadSearch: function () {
                 EventBus.$emit('load', 'Search')

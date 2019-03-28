@@ -11,7 +11,6 @@ function setRole(data) {
     return data;
 };
 function getURL() {
-    console.log(localStorage.getItem('role'));
     if(localStorage.getItem('role')==='CHIEF'){
     return '/ChiefCabinet'}
     else{return '/'}

@@ -1,18 +1,6 @@
 <template>
     <div>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-            <b-form-group
-                    id="InputGroup1"
-                    label="Email address:"
-                    label-for="Input1"
-            >
-                <b-form-input
-                        id="Input1"
-                        type="email"
-                        v-model="form.email"
-                        required
-                        placeholder="Enter email" />
-            </b-form-group>
 
             <b-form-group id="InputGroup2" label="Surname:" label-for="Input2">
                 <b-form-input
@@ -22,15 +10,7 @@
                         required
                         placeholder="Enter surname" />
             </b-form-group>
-            <b-form-group id="InputGroup6" label="PhoneNumber:" label-for="Input6">
-            <b-form-input
-                    id="Input6"
-                    type="text"
-                    v-model="form.phoneNumber"
-                    required
-                    placeholder="Enter name" />
-        </b-form-group>
-            <b-form-group id="InputGroup4" label="Name:" label-for="exampleInput4">
+            <b-form-group id="InputGroup4" label="Name:" label-for="Input4">
                 <b-form-input
                         id="Input4"
                         type="text"
@@ -38,21 +18,40 @@
                         required
                         placeholder="Enter name" />
             </b-form-group>
-            <b-form-group label="Sex choose">
-                <b-form-radio-group v-model="form.sex" :options="options" plain name="Sex: " />
+            <b-form-group id="InputGroup5" label="Medical Book:" label-for="Input4">
+                <b-form-input
+                        id="Input4"
+                        type="text"
+                        v-model="form.medicalBook"
+                        required
+                        placeholder="Enter medical book" />
             </b-form-group>
-            <b-form-group id="InputGroup7" label="Wallet" label-for="Input7">
+            <b-form-group id="InputGroup5" label="Group:" label-for="Input5">
+                <b-form-input
+                        id="Input5"
+                        type="text"
+                        v-model="form.group"
+                        required
+                        placeholder="Enter group" />
+            </b-form-group>
+            <b-form-group id="InputGroup6" label="Parent 1:" label-for="Input6">
+                <b-form-input
+                        id="Input6"
+                        type="text"
+                        v-model="form.parent1"
+                        required
+                        placeholder="Enter the first parent" />
+            </b-form-group>
+            <b-form-group id="InputGroup7" label="Parent 2:" label-for="Input7">
                 <b-form-input
                         id="Input7"
                         type="text"
-                        v-model="form.wallet"
-                        required
-                        placeholder="Enter wallet" />
+                        v-model="form.parent2"
+                        placeholder="Enter the second parent (optional)" />
             </b-form-group>
 
-
             <b-form-group id="Group4">
-                <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
+                <b-form-checkbox-group v-model="form.checked" id="Checks">
                     <b-form-checkbox value="that">Check that out</b-form-checkbox>
                 </b-form-checkbox-group>
             </b-form-group>
@@ -68,17 +67,15 @@
         data() {
             return {
                 form: {
-                    email: '',
                     name: '',
                     surname: '',
                     checked: [],
-                    sex: '',
-                    phoneNumber: '',
-                    wallet:'',
+                    medicalBook: '',
+                    group: '',
+                    parent1: '',
+                    parent2:''
                 },
-                show: true,
-                options: [{text: 'Female', value:'female'},
-                    {text:'Male', value:'male'}]
+                show: true
             }
         },
         methods: {
@@ -89,13 +86,13 @@
             onReset(evt) {
                 evt.preventDefault()
                 /* Reset our form values */
-                this.form.email = ''
                 this.form.name = ''
                 this.form.surname=''
                 this.form.checked = []
-                this.form.phoneNumber=''
-                this.form.sex=''
-                this.form.wallet=''
+                this.form.medicalBook=''
+                this.form.group=''
+                this.form.parent1=''
+                this.form.parent2=''
                 /* Trick to reset/clear native browser form validation state */
                 this.show = false
                 this.$nextTick(() => {

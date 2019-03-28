@@ -22,15 +22,7 @@
                         required
                         placeholder="Enter surname" />
             </b-form-group>
-            <b-form-group id="InputGroup6" label="PhoneNumber:" label-for="Input6">
-            <b-form-input
-                    id="Input6"
-                    type="text"
-                    v-model="form.phoneNumber"
-                    required
-                    placeholder="Enter name" />
-        </b-form-group>
-            <b-form-group id="InputGroup4" label="Name:" label-for="exampleInput4">
+            <b-form-group id="InputGroup4" label="Name:" label-for="Input4">
                 <b-form-input
                         id="Input4"
                         type="text"
@@ -38,21 +30,44 @@
                         required
                         placeholder="Enter name" />
             </b-form-group>
-            <b-form-group label="Sex choose">
-                <b-form-radio-group v-model="form.sex" :options="options" plain name="Sex: " />
+            <b-form-group id="InputGroup5" label="Passport:" label-for="Input5">
+                <b-form-input
+                        id="Input5"
+                        type="text"
+                        v-model="form.passport"
+                        required
+                        placeholder="Enter passport" />
             </b-form-group>
-            <b-form-group id="InputGroup7" label="Wallet" label-for="Input7">
+            <b-form-group id="InputGroup6" label="Inn:" label-for="Input6">
+                <b-form-input
+                        id="Input6"
+                        type="text"
+                        v-model="form.inn"
+                        required
+                        placeholder="Enter inn" />
+            </b-form-group>
+            <b-form-group id="InputGroup7" label="Phone:" label-for="Input7">
                 <b-form-input
                         id="Input7"
                         type="text"
-                        v-model="form.wallet"
+                        v-model="form.phone"
                         required
-                        placeholder="Enter wallet" />
+                        placeholder="Enter phone" />
+            </b-form-group>
+            <b-form-group id="InputGroup8" label="Salary:" label-for="Input8">
+                <b-form-input
+                        id="Input8"
+                        type="text"
+                        v-model="form.salary"
+                        required
+                        placeholder="Enter salary" />
+            </b-form-group>
+            <b-form-group id="InputGroup8" label="Type:" label-for="Input8">
+            <b-form-select v-model="form.selectedType" :options="options" />
             </b-form-group>
 
-
             <b-form-group id="Group4">
-                <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
+                <b-form-checkbox-group v-model="form.checked" id="Checks">
                     <b-form-checkbox value="that">Check that out</b-form-checkbox>
                 </b-form-checkbox-group>
             </b-form-group>
@@ -72,13 +87,21 @@
                     name: '',
                     surname: '',
                     checked: [],
-                    sex: '',
-                    phoneNumber: '',
-                    wallet:'',
+                    passport: '',
+                    inn: '',
+                    salary: '',
+                    phone: '',
+                    selectedType: null
                 },
-                show: true,
-                options: [{text: 'Female', value:'female'},
-                    {text:'Male', value:'male'}]
+                options:[
+                    { value: null, text: 'Select the type' },
+                    { value: 'Babysitter', text: 'Babysitter' },
+                    { value: 'Educator', text: 'Educator' },
+                    { value: 'Security', text: 'Security' },
+                    { value: 'Teacher', text: 'Teacher' },
+                    { value: 'Chief', text: 'Chief' },
+                ],
+                show: true
             }
         },
         methods: {
@@ -93,9 +116,11 @@
                 this.form.name = ''
                 this.form.surname=''
                 this.form.checked = []
-                this.form.phoneNumber=''
-                this.form.sex=''
-                this.form.wallet=''
+                this.form.inn=''
+                this.form.passport=''
+                this.form.salary=''
+                this.form.phone=''
+                this.form.selectedType= null
                 /* Trick to reset/clear native browser form validation state */
                 this.show = false
                 this.$nextTick(() => {
