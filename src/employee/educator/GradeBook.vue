@@ -1,82 +1,310 @@
 <template>
-    <b-container fluid>
+    <div id="app">
+        <head>
+            <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+        </head>
+        <div id="app1" style="height: 100px !important">
+            <v-app id="date">
+                <v-container grid-list-md>
+                    <v-layout row wrap>
+                        <v-flex xs12 lg6>
+                            <v-menu
+                                    ref="menu1"
+                                    v-model="menu1"
+                                    :close-on-content-click="false"
+                                    :nudge-right="40"
+                                    lazy
+                                    transition="scale-transition"
+                                    offset-y
+                                    full-width
+                                    max-width="290px"
+                                    min-width="290px"
+                            >
+                                <template v-slot:activator="{ on }">
+                                    <v-text-field
+                                            v-model="dateFormatted"
+                                            label="Date"
+                                            hint="MM/DD/YYYY format"
+                                            persistent-hint
+                                            prepend-icon="event"
+                                            @blur="date = parseDate(dateFormatted)"
+                                            v-on="on"
+                                            widht="10px"
+                                    ></v-text-field>
+                                </template>
+                                <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
+                            </v-menu>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-app>
+        </div>
+        <v-app id="inspire">
+            <div>
+                <v-data-table
+                        :headers="headers"
+                        :items="desserts"
+                >
+                    <template v-slot:items="props">
+                        <td>
+                            <v-edit-dialog
+                                    :return-value.sync="props.item.name"
+                                    lazy
+                                    @save="save"
+                                    @cancel="cancel"
+                                    @open="open"
+                                    @close="close"
+                            > {{ props.item.name }}
+                                <template v-slot:input>
+                                    <v-text-field
+                                            v-model="props.item.name"
+                                            :rules="[max25chars]"
+                                            label="Edit"
+                                            single-line
+                                            counter
+                                    ></v-text-field>
+                                </template>
+                            </v-edit-dialog>
+                        </td>
+                        <td>
+                            <v-edit-dialog
+                                    :return-value.sync="props.item.attended"
+                                    lazy
+                                    @save="save"
+                                    @cancel="cancel"
+                                    @open="open"
+                                    @close="close"
+                            > {{ props.item.attended }}
+                                <template v-slot:input>
+                                    <v-text-field
+                                            v-model="props.item.attended"
+                                            :rules="[max25chars]"
+                                            label="Edit"
+                                            single-line
+                                            counter
+                                    ></v-text-field>
+                                </template>
+                            </v-edit-dialog>
+                        </td>
 
-        <!-- Main table element -->
-        <b-table
-                show-empty
-                stacked="md"
-                :items="items"
-                :fields="fields"
-        >
-            <template slot="name" slot-scope="row">
-                {{ row.value.first }} {{ row.value.last }}
-            </template>
+                        <td>
+                            <v-edit-dialog
+                                    :return-value.sync="props.item.behavior"
+                                    lazy
+                                    @save="save"
+                                    @cancel="cancel"
+                                    @open="open"
+                                    @close="close"
+                            > {{ props.item.behavior }}
+                                <template v-slot:input>
+                                    <v-text-field
+                                            v-model="props.item.behavior"
+                                            :rules="[max25chars]"
+                                            label="Edit"
+                                            single-line
+                                            counter
+                                    ></v-text-field>
+                                </template>
+                            </v-edit-dialog>
+                        </td>
 
-            <template slot="Attend" slot-scope="row">
-                <EditableField v-bind:value='tempValue'></EditableField>
-            </template>
-
-            <template slot="mark" slot-scope="row">
-                <EditableField v-bind:value='tempValue'></EditableField>
-            </template>
-            <template slot="eating_score" slot-scope="row">
-                <EditableField v-bind:value='tempValue'></EditableField>
-            </template>
-
-        </b-table>
-        <b-button class="saveAll" @onclick="saveEdit">Save</b-button>
-    </b-container>
+                        <td>
+                            <v-edit-dialog
+                                    :return-value.sync="props.item.eating_score"
+                                    lazy
+                                    @save="save"
+                                    @cancel="cancel"
+                                    @open="open"
+                                    @close="close"
+                            > {{ props.item.eating_score }}
+                                <template v-slot:input>
+                                    <v-text-field
+                                            v-model="props.item.eating_score"
+                                            :rules="[max25chars]"
+                                            label="Edit"
+                                            single-line
+                                            counter
+                                    ></v-text-field>
+                                </template>
+                            </v-edit-dialog>
+                        </td>
+                        <td class="text-xs-right">
+                            <v-edit-dialog
+                                    :return-value.sync="props.item.comment"
+                                    large
+                                    lazy
+                                    persistent
+                                    @save="save"
+                                    @cancel="cancel"
+                                    @open="open"
+                                    @close="close"
+                            >
+                                <div>{{ props.item.comment }}</div>
+                                <template v-slot:input>
+                                    <div class="mt-3 title">Update Iron</div>
+                                </template>
+                                <template v-slot:input>
+                                    <v-text-field
+                                            v-model="props.item.comment"
+                                            :rules="[max25chars]"
+                                            label="Edit"
+                                            single-line
+                                            counter
+                                            autofocus
+                                    ></v-text-field>
+                                </template>
+                            </v-edit-dialog>
+                        </td>
+                    </template>
+                </v-data-table>
+            </div>
+        </v-app>
+    </div>
 </template>
 
 <script>
-    import EditableField from "./EditableField";
-    import BButton from "bootstrap-vue/src/components/button/button";
-    const items = [
-        { Attend: true, eating_score: 40, name: { first: 'Dickerson', last: 'Macdonald' } },
-        { Attend: false, eating_score: 21, name: { first: 'Larsen', last: 'Shaw' } },
-        {
-            Attend: false,
-            eating_score: 9,
-            name: { first: 'Mini', last: 'Navarro' },
-        },
-        { name: { first: 'Geneva', last: 'Wilson' } },
-        {  name: { first: 'Jami', last: 'Carney' } },
-        { name: { first: 'Essie', last: 'Dunlap' } },
-        { name: { first: 'Thor', last: 'Macdonald' } },
-        {name: { first: 'Larsen', last: 'Shaw' }},
-        { name: { first: 'Mitzi', last: 'Navarro' } },
-        { name: { first: 'Genevieve', last: 'Wilson' } },
-        { name: { first: 'John', last: 'Carney' } },
-        { name: { first: 'Dick', last: 'Dunlap' } }
-    ]
+    import 'vuetify/dist/vuetify.min.css'
+    import Vue from 'vue'
+    import Vuetify from 'vuetify'
 
+    Vue.use(Vuetify)
     export default {
-        components: {BButton, EditableField},
-        data() {
+        data () {
             return {
-                tempValue: '-',
-                items: items,
-                fields: [
-                    { key: 'name', label: 'Person Full name', sortable: true, sortDirection: 'desc' },
-                    { key: 'eating_score', label: 'Eating score', sortable: true, class: 'text-center' },
-                    { key: 'Attend', label: 'Attend' },
-                    { key: 'mark', label: 'Mark' }
+                date: new Date().toISOString().substr(0, 10),
+                dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
+                menu1: false,
+                menu2: false,
+                snack: false,
+                snackColor: '',
+                snackText: '',
+                max25chars: v => v.length <= 25 || 'Input too long!',
+                pagination: {},
+                headers: [
+                    {
+                        text: 'Name',
+                        align: 'left',
+                        sortable: true,
+                        value: 'name'
+                    },
+                    { text: 'Attended', value: 'attended' },
+                    { text: 'Behavior', value: 'behavior' },
+                    { text: 'Eating score', value: 'eating_score' },
+                    { text: 'Comment', value: 'comment' },
                 ],
+                desserts: [
+                    {
+                        name: 'Frozen Yogurt',
+                        attended: '+',
+                        behavior: 4,
+                        eating_score: 5,
+                        comment: 'Good boy',
+                    },
+                    {
+                        name: 'Ice cream sandwich',
+                        attended: '-',
+                        behavior: 4,
+                        eating_score: 4,
+                        comment: '',
+                    },
+                    {
+                        name: 'Eclair',
+                        attended: '-',
+                        behavior: 5,
+                        eating_score: 3,
+                        comment: ' ',
+                    },
+                    {
+                        name: 'Cupcake',
+                        attended: '-',
+                        behavior: 3,
+                        eating_score: 5,
+                        comment: '',
+                    },
+                    {
+                        name: 'Gingerbread',
+                        attended: '-',
+                        behavior: 2,
+                        eating_score: 4,
+                        comment: '',
+                    },
+                    {
+                        name: 'Jelly bean',
+                        attended: '+',
+                        behavior: 2,
+                        eating_score: 4,
+                        comment: '',
+                    },
+                    {
+                        name: 'Lollipop',
+                        attended: '-',
+                        behavior: 5,
+                        eating_score: 2,
+                        comment: '',
+                    },
+                    {
+                        name: 'Honeycomb',
+                        attended: '-',
+                        behavior: 3,
+                        eating_score: 2,
+                        comment: '',
+                    },
+                    {
+                        name: 'Donut',
+                        attended: '+',
+                        behavior: 5,
+                        eating_score: 5,
+                        comment: 'Good girl',
+                    },
+                    {
+                        name: 'KitKat',
+                        attended: '+',
+                        behavior: 5,
+                        eating_score: 5,
+                        comment: 'broke the window',
+                    }
+                ]
             }
         },
         computed: {
-            sortOptions() {
-                // Create an options list from our fields
-                return this.fields
-                    .filter(f => f.sortable)
-                    .map(f => {
-                        return { text: f.label, value: f.key }
-                    })
+            computedDateFormatted () {
+                return this.formatDate(this.date)
+            }
+        },
+        watch: {
+            date (val) {
+                this.dateFormatted = this.formatDate(this.date)
             }
         },
         methods: {
-            saveEdit: function () {
+            save () {
+                this.snack = true
+                this.snackColor = 'success'
+                this.snackText = 'Data saved'
+            },
+            cancel () {
+                this.snack = true
+                this.snackColor = 'error'
+                this.snackText = 'Canceled'
+            },
+            open () {
+                this.snack = true
+                this.snackColor = 'info'
+                this.snackText = 'Dialog opened'
+            },
+            close () {
+            },
+            formatDate (date) {
+                if (!date) return null
 
+                const [year, month, day] = date.split('-')
+                return `${month}/${day}/${year}`
+            },
+            parseDate (date) {
+                if (!date) return null
+
+                const [month, day, year] = date.split('/')
+                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
             }
         }
     }

@@ -1,6 +1,7 @@
 
 <template>
     <div>
+
         <div>
             <nav_bar></nav_bar>
         </div>
@@ -41,7 +42,7 @@
 
                         <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom />
                     </b-card></b-col>
-                    <b-col cols="9">
+                    <b-col cols="9" style="position: inherit !important;">
                         <component :is="currentView"></component>
 
                     </b-col>
@@ -82,8 +83,7 @@
             Messages,
             nav_bar,
             Search,
-            GradeBook,
-            EditGroup
+            GradeBook
         },
         methods: {
             loadView(selected) {

@@ -1,5 +1,8 @@
 <template>
     <div>
+        <head>
+            <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
+        </head>
         <b-navbar fixed="top" toggleable="lg" type="dark" variant="info">
             <b-navbar-brand href="#">
                 <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="BV" />
@@ -15,7 +18,6 @@
                         <b-button class="my-2 my-sm-0" @click.prevent="loadSearch">Search</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadMessages">Messages</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadGradeBook">Gradebook</b-button>
-                        <b-button class="my-2 my-sm-0" @click.prevent="loadEditGroup">Edit Group</b-button>
                     </div>
                 </b-navbar-nav>
 
@@ -53,9 +55,6 @@
             loadGradeBook: function () {
                 EventBus.$emit('load', 'GradeBook')
             },
-            loadEditGroup: function () {
-                EventBus.$emit('load', 'EditGroup')
-            }
         }
 
     };
