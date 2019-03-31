@@ -24,7 +24,6 @@
 <script>
     import { router } from '../_helpers/index.js';
     import { userService } from '../_services/index.js';
-
     export default {
         props:{
             currentUrl:{
@@ -49,11 +48,9 @@
             handleSubmit (e) {
                 this.submitted = true;
                 const { username, password } = this;
-
                 if (!(username && password)) {
                     return;
                 }
-
                 this.loading = true;
                 userService.login(username, password)
                     .then(userService.getAll)

@@ -2,9 +2,9 @@
 <template>
     <div>
         <div>
-        <nav_menu></nav_menu>
+            <nav_bar></nav_bar>
         </div>
-            <div>
+        <div>
             <b-contanier>
                 <b-row align-h="center">
                     <b-col cols="3" style="" ><b-card
@@ -15,7 +15,7 @@
                             img-top
                     >
 
-                        <h4 slot="header">Big Chief</h4>
+                        <h4 slot="header">Random guy</h4>
 
                         <b-card-body>
                             <b-card-title>Card Title</b-card-title>
@@ -56,11 +56,7 @@
     import { EventBus } from '../_services/event-bus.js';
     import Vue from 'vue'
     import BootstrapVue from 'bootstrap-vue'
-    import AddParent from '../chief/AddParent'
-    import AddChild from '../chief/AddChild'
-    import AddItem from '../chief/AddItem'
-    import AddEmployee from '../chief/AddEmployee'
-    import nav_menu from '../chief/page_components/nav-menu.vue'
+    import nav_bar from '../Parent/nav-bar.vue'
     import BContainer from 'bootstrap-vue/es/components/layout/container'
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
@@ -70,7 +66,6 @@
     export default {
         data () {
             return {
-                IsSetAddParent: false,
                 IsSetMessages: true,
                 user: {},
                 users: [],
@@ -82,11 +77,7 @@
         },
         components: {
             Messages,
-            AddParent,
-            nav_menu,
-            AddChild,
-            AddEmployee,
-            AddItem,
+            nav_bar,
             Search
         },
         methods: {

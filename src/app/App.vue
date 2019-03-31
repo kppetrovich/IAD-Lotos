@@ -3,7 +3,7 @@ export * from './user.service';
     <div class="jumbotron">
         <div class="container">
             <div class="row">
-                <div class="">
+                <div class="" >
                     <router-view></router-view>
                 </div>
             </div>
