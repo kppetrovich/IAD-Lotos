@@ -55,6 +55,9 @@
             loadGradeBook: function () {
                 EventBus.$emit('load', 'GradeBook')
             },
+            loadEditGroup: function () {
+                EventBus.$emit('load', 'EditGroup')
+            }
         }
 
     };

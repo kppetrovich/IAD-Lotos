@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <head>
             <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
@@ -36,7 +35,7 @@
 <script>
     import Vue from 'vue'
     import BootstrapVue from 'bootstrap-vue'
-    import { EventBus } from '../../_services/event-bus.js';
+    import { EventBus } from '../_services/event-bus.js';
     Vue.use(BootstrapVue)
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
     Vue.component('b-button-toolbar', BButtonToolbar)
@@ -57,6 +56,3 @@
     };
 </script>
 
-<style scoped>
-
-</style>

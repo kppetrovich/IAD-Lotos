@@ -1,9 +1,8 @@
 
 <template>
     <div>
-
         <div>
-            <nav_menu></nav_menu>
+            <nav_bar></nav_bar>
         </div>
         <div>
             <b-contanier>
@@ -16,7 +15,7 @@
                             img-top
                     >
 
-                        <h4 slot="header">Black Granny</h4>
+                        <h4 slot="header">Black granny</h4>
 
                         <b-card-body>
                             <b-card-title>Card Title</b-card-title>
@@ -42,7 +41,7 @@
 
                         <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom />
                     </b-card></b-col>
-                    <b-col cols="9" style="position: inherit !important;">
+                    <b-col cols="9">
                         <component :is="currentView"></component>
 
                     </b-col>
@@ -53,22 +52,20 @@
 </template>
 
 <script>
-    import Search from '../../_services/Search.vue';
-    import { EventBus } from '../../_services/event-bus.js';
+    import Search from '../_services/Search.vue';
+    import { EventBus } from '../_services/event-bus.js';
     import Vue from 'vue'
     import BootstrapVue from 'bootstrap-vue'
-    import nav_menu from '../babysitter/nav-menu.vue'
+    import nav_bar from '../Parent/nav-bar.vue'
     import BContainer from 'bootstrap-vue/es/components/layout/container'
-    import Cameras  from '../security/Cameras.vue'
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
-    import Messages from "../../chief/Messages";
+    import Messages from "../chief/Messages";
     Vue.component('b-button-toolbar', BButtonToolbar);
     export default {
         data () {
             return {
-                IsSetAddParent: false,
                 IsSetMessages: true,
                 user: {},
                 users: [],
@@ -80,9 +77,8 @@
         },
         components: {
             Messages,
-            nav_menu,
-            Search,
-            Cameras
+            nav_bar,
+            Search
         },
         methods: {
             loadView(selected) {

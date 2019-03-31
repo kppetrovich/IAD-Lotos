@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <head>
             <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
@@ -18,6 +17,7 @@
                     <div>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadSearch">Search</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadMessages">Messages</b-button>
+                        <b-button class="my-2 my-sm-0" @click.prevent="loadMedicalBooks">Medical books</b-button>
                     </div>
                 </b-navbar-nav>
 
@@ -51,6 +51,9 @@
             },
             loadSearch: function () {
                 EventBus.$emit('load', 'Search')
+            },
+            loadMedicalBooks: function () {
+                EventBus.$emit('load', 'MedicalBooks')
             },
         }
 

@@ -6,12 +6,17 @@ import LoginPage from '../login/LoginPage.vue'
 import AddParent from '../chief/AddParent.vue';
 import BabysitterCabinet from '../employee/babysitter/BabysitterCabinet.vue';
 import EducatorCabinet from '../employee/educator/EducatorCabinet.vue'
+import SecurityCabinet from '../employee/security/SecurityCabinet.vue'
+import TeacherCabinet from '../employee/teacher/TeacherCabinet'
+import ParentCabinet from '../Parent/ParentCabinet'
+import CoockerCabinet from '../employee/cookerCabinet/CookerCabinet'
+import DoctorCabinet from '../employee/doctor/DoctorCabinet'
 Vue.use(Router);
 
 export const router = new Router({
     mode: 'history',
     routes: [
-        { path: '/', component: EducatorCabinet,  children: [{
+        { path: '/', component: DoctorCabinet,  children: [{
                 path: 'AddParent', component: AddParent
              }]},
         { path: '/login', component: LoginPage },

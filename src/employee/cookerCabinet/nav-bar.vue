@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <head>
             <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
@@ -18,6 +17,8 @@
                     <div>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadSearch">Search</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadMessages">Messages</b-button>
+                        <b-button class="my-2 my-sm-0" @click.prevent="loadAddMenu">Add Menu</b-button>
+                        <b-button class="my-2 my-sm-0" @click.prevent="loadDelivery">Delivery</b-button>
                     </div>
                 </b-navbar-nav>
 
@@ -31,32 +32,34 @@
             </b-collapse>
         </b-navbar>
     </div>
-</template>
+    </template>
 
-<script>
-    import Vue from 'vue'
-    import BootstrapVue from 'bootstrap-vue'
-    import { EventBus } from '../../_services/event-bus.js';
-    Vue.use(BootstrapVue)
-    import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
-    Vue.component('b-button-toolbar', BButtonToolbar)
-    export default {
-        data () {
-            return {
+    <script>
+        import Vue from 'vue'
+        import BootstrapVue from 'bootstrap-vue'
+        import { EventBus } from '../../_services/event-bus.js';
+        Vue.use(BootstrapVue)
+        import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
+        Vue.component('b-button-toolbar', BButtonToolbar)
+        export default {
+            data () {
+                return {
+                }
+            },
+            methods: {
+                loadMessages: function () {
+                    EventBus.$emit('load', 'Messages');
+                },
+                loadSearch: function () {
+                    EventBus.$emit('load', 'Search')
+                },
+                loadAddMenu: function () {
+                    EventBus.$emit('load', 'AddMenu')
+                },
+                loadDelivery: function () {
+                    EventBus.$emit('load', 'Delivery')
+                }
             }
-        },
-        methods: {
-            loadMessages: function () {
-                EventBus.$emit('load', 'Messages');
-            },
-            loadSearch: function () {
-                EventBus.$emit('load', 'Search')
-            },
-        }
 
-    };
-</script>
-
-<style scoped>
-
-</style>
+        };
+    </script>

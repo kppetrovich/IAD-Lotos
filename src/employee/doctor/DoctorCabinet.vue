@@ -3,7 +3,7 @@
     <div>
 
         <div>
-            <nav_menu></nav_menu>
+            <nav_bar></nav_bar>
         </div>
         <div>
             <b-contanier>
@@ -16,7 +16,7 @@
                             img-top
                     >
 
-                        <h4 slot="header">Black Granny</h4>
+                        <h4 slot="header">Aibolit</h4>
 
                         <b-card-body>
                             <b-card-title>Card Title</b-card-title>
@@ -43,7 +43,7 @@
                         <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom />
                     </b-card></b-col>
                     <b-col cols="9" style="position: inherit !important;">
-                        <component :is="currentView"></component>
+                        <component style="box-sizing:inherit !important;" :is="currentView"></component>
 
                     </b-col>
                 </b-row>
@@ -57,13 +57,16 @@
     import { EventBus } from '../../_services/event-bus.js';
     import Vue from 'vue'
     import BootstrapVue from 'bootstrap-vue'
-    import nav_menu from '../babysitter/nav-menu.vue'
+    import nav_bar from '../doctor/nav-bar.vue'
     import BContainer from 'bootstrap-vue/es/components/layout/container'
-    import Cameras  from '../security/Cameras.vue'
+    import MedicalBooks  from '../doctor/MedicalBooks'
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
     import Messages from "../../chief/Messages";
+    import AllergyList from '../doctor/AllergyList'
+    import DiseaseList from '../doctor/DiseaseList'
+    import VaccineList from '../doctor/VaccineList'
     Vue.component('b-button-toolbar', BButtonToolbar);
     export default {
         data () {
@@ -80,9 +83,12 @@
         },
         components: {
             Messages,
-            nav_menu,
+            nav_bar,
             Search,
-            Cameras
+            MedicalBooks,
+            AllergyList,
+            DiseaseList,
+            VaccineList
         },
         methods: {
             loadView(selected) {

@@ -3,7 +3,7 @@
     <div>
 
         <div>
-            <nav_menu></nav_menu>
+            <nav_bar></nav_bar>
         </div>
         <div>
             <b-contanier>
@@ -16,7 +16,7 @@
                             img-top
                     >
 
-                        <h4 slot="header">Black Granny</h4>
+                        <h4 slot="header">Cooker</h4>
 
                         <b-card-body>
                             <b-card-title>Card Title</b-card-title>
@@ -57,13 +57,14 @@
     import { EventBus } from '../../_services/event-bus.js';
     import Vue from 'vue'
     import BootstrapVue from 'bootstrap-vue'
-    import nav_menu from '../babysitter/nav-menu.vue'
+    import nav_bar from '../cookerCabinet/nav-bar.vue'
     import BContainer from 'bootstrap-vue/es/components/layout/container'
-    import Cameras  from '../security/Cameras.vue'
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
     import Messages from "../../chief/Messages";
+    import AddMenu from "../cookerCabinet/AddMenu"
+    import Delivery from"../cookerCabinet/Delivery"
     Vue.component('b-button-toolbar', BButtonToolbar);
     export default {
         data () {
@@ -80,9 +81,10 @@
         },
         components: {
             Messages,
-            nav_menu,
+            nav_bar,
             Search,
-            Cameras
+           AddMenu,
+            Delivery
         },
         methods: {
             loadView(selected) {
