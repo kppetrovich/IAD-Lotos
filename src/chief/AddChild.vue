@@ -2,6 +2,22 @@
     <div>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
+            <b-form-group id="InputGroup2" label="Email: " label-for="Input2">
+                <b-form-input
+                        id="Input2"
+                        type="email"
+                        v-model="form.client.username"
+                        required
+                        placeholder="Enter email" />
+            </b-form-group>
+            <b-form-group id="InputGroup2" label="Password:" label-for="Input2">
+                <b-form-input
+                        id="Input2"
+                        type="text"
+                        v-model="form.client.password"
+                        required
+                        placeholder="Enter password" />
+            </b-form-group>
             <b-form-group id="InputGroup2" label="Surname:" label-for="Input2">
                 <b-form-input
                         id="Input2"
@@ -21,7 +37,7 @@
             <template>
                 <div>Group:</div>
                 <div>
-                    <b-form-select v-model="form.group" :options="options" :select-size="4"></b-form-select>
+                    <b-form-select v-model="form.group.id" :options="options" :select-size="4"></b-form-select>
                 </div>
             </template>
             <div>Parent 1:</div>
@@ -39,18 +55,23 @@
 <script>
     import SearchOfParent from '../chief/page_components/SearchOfParent.vue'
     import {EventBus} from "../_services/event-bus";
-
+    import config from 'config'
     export default {
         data() {
             return {
                 isSearchOfParent1: false,
                 isSearchOfParent2: false,
                 form: {
+                    client:{
+                        username: '',
+                        password: '',
+                        role: 'CHILDREN'
+                    },
                     name: '',
                     surname: '',
-                    group: '',
-                    parent1: '',
-                    parent2:''
+                    group: {id: ''},
+                    parent1: {id: ''},
+                    parent2:{id: ''}
                 },
                 show: true,
                 options: [
@@ -62,16 +83,29 @@
         methods: {
             onSubmit(evt) {
                 evt.preventDefault()
-                alert(JSON.stringify(this.form))
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('token'),
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors',
+                    body: JSON.stringify(this.form)
+                };
+
+                return fetch(`${config.apiUrl}/registration/children`, requestOptions)
+
             },
             onReset(evt) {
                 evt.preventDefault()
                 /* Reset our form values */
                 this.form.name = ''
                 this.form.surname=''
-                this.form.group=''
-                this.form.parent1=''
-                this.form.parent2=''
+                this.form.group.id=''
+                this.form.parent1.id=''
+                this.form.parent2.id=''
+                this.form.client.username=''
+                this.from.client.password=''
                 /* Trick to reset/clear native browser form validation state */
                 this.show = false
                 this.$nextTick(() => {
@@ -89,11 +123,11 @@
                 }
             },
             setId1(id){
-                this.form.parent1=id;
+                this.form.parent1.id=id;
 
             },
             setId2(id){
-                this.form.parent2=id;
+                this.form.parent2.id=id;
             },
             askForGroups(){
                 const requestOptions = {
@@ -111,7 +145,12 @@
             },
             handleAskForGroups(response){
                 response.text().then(text => {
-
+                    this.options=JSON.parse(text).map(element=> {
+                        return {
+                            value: element.id,
+                            text: element.name,
+                        }
+                    })
                 });
             }
         },
@@ -119,7 +158,7 @@
             SearchOfParent
         },
         mounted(){
-            this.askForGroups,
+            this.askForGroups(),
             EventBus.$on('setId1', this.setId1),
             EventBus.$on('setId2', this.setId2)
         },
