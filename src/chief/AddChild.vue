@@ -18,44 +18,18 @@
                         required
                         placeholder="Enter name" />
             </b-form-group>
-            <b-form-group id="InputGroup5" label="Medical Book:" label-for="Input4">
-                <b-form-input
-                        id="Input4"
-                        type="text"
-                        v-model="form.medicalBook"
-                        required
-                        placeholder="Enter medical book" />
-            </b-form-group>
-            <b-form-group id="InputGroup5" label="Group:" label-for="Input5">
-                <b-form-input
-                        id="Input5"
-                        type="text"
-                        v-model="form.group"
-                        required
-                        placeholder="Enter group" />
-            </b-form-group>
-            <b-form-group id="InputGroup6" label="Parent 1:" label-for="Input6">
-                <b-form-input
-                        id="Input6"
-                        type="text"
-                        v-model="form.parent1"
-                        required
-                        placeholder="Enter the first parent" />
-            </b-form-group>
-            <b-form-group id="InputGroup7" label="Parent 2:" label-for="Input7">
-                <b-form-input
-                        id="Input7"
-                        type="text"
-                        v-model="form.parent2"
-                        placeholder="Enter the second parent (optional)" />
-            </b-form-group>
-
-            <b-form-group id="Group4">
-                <b-form-checkbox-group v-model="form.checked" id="Checks">
-                    <b-form-checkbox value="that">Check that out</b-form-checkbox>
-                </b-form-checkbox-group>
-            </b-form-group>
-
+            <template>
+                <div>Group:</div>
+                <div>
+                    <b-form-select v-model="form.group" :options="options" :select-size="4"></b-form-select>
+                </div>
+            </template>
+            <div>Parent 1:</div>
+            <b-button v-on:click="loadSearchOfParent(1)"> Set the first parent</b-button>
+            <div v-if="isSearchOfParent1"><SearchOfParent what="first"></SearchOfParent></div>
+            <div>Parent 2:</div>
+            <b-button v-on:click="loadSearchOfParent(2)"> Set the second parent</b-button>
+            <div v-if="isSearchOfParent2"><SearchOfParent what="second"></SearchOfParent></div>
             <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
         </b-form>
@@ -63,20 +37,27 @@
 </template>
 
 <script>
+    import SearchOfParent from '../chief/page_components/SearchOfParent.vue'
+    import {EventBus} from "../_services/event-bus";
+
     export default {
         data() {
             return {
+                isSearchOfParent1: false,
+                isSearchOfParent2: false,
                 form: {
                     name: '',
                     surname: '',
-                    checked: [],
-                    medicalBook: '',
                     group: '',
                     parent1: '',
                     parent2:''
                 },
-                show: true
-            }
+                show: true,
+                options: [
+            { value: 'a', text: "A" },
+            { value: 'b', text: 'Default Selected Option' },]
+
+        }
         },
         methods: {
             onSubmit(evt) {
@@ -88,8 +69,6 @@
                 /* Reset our form values */
                 this.form.name = ''
                 this.form.surname=''
-                this.form.checked = []
-                this.form.medicalBook=''
                 this.form.group=''
                 this.form.parent1=''
                 this.form.parent2=''
@@ -98,7 +77,53 @@
                 this.$nextTick(() => {
                     this.show = true
                 })
+            },
+            loadSearchOfParent(type){
+                if(type===1){
+                    this.isSearchOfParent2=false;
+                    this.isSearchOfParent1=true;
+                }
+                if(type===2){
+                    this.isSearchOfParent1=false;
+                    this.isSearchOfParent2=true;
+                }
+            },
+            setId1(id){
+                this.form.parent1=id;
+
+            },
+            setId2(id){
+                this.form.parent2=id;
+            },
+            askForGroups(){
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('token'),
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors',
+                    body: '{}'
+                };
+
+                return fetch(`${config.apiUrl}/find/group`, requestOptions)
+                    .then(this.handleAskForGroups);
+            },
+            handleAskForGroups(response){
+                response.text().then(text => {
+
+                });
             }
-        }
+        },
+        components:{
+            SearchOfParent
+        },
+        mounted(){
+            this.askForGroups,
+            EventBus.$on('setId1', this.setId1),
+            EventBus.$on('setId2', this.setId2)
+        },
+
     }
+
 </script>
