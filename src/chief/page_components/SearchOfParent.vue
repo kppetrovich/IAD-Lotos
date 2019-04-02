@@ -60,10 +60,15 @@
             setId(id) {
                 this.id = id;
                 if (this.what == 'first') {
-                    EventBus.$emit('setId1', this.id)
+                    EventBus.$emit('setId1', this.id);
+                    this.id='';
+                    this.search=''
                 }
                 if (this.what == 'second') {
-                    EventBus.$emit('setId2', this.id)
+                    EventBus.$emit('setId2', this.id);
+                    this.id='';
+                    this.search=''
+                    this.search=''
                 }
             },
             sendRequest() {

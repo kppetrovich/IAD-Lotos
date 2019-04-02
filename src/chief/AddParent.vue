@@ -51,12 +51,6 @@
             </b-form-group>
 
 
-            <b-form-group id="Group4">
-                <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
-                    <b-form-checkbox value="that">Check that out</b-form-checkbox>
-                </b-form-checkbox-group>
-            </b-form-group>
-
             <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
             <div v-if="isGotResponse">

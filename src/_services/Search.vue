@@ -107,6 +107,11 @@
        <div>
            <hr>
            <b-form @submit.prevent="setVisible" @reset="onReset" v-if="show">
+               <b-form-select v-model="selectedRole" :options="options">
+                   <template slot="first">
+                       <option :value="null" disabled>-- Please select role --</option>
+                   </template>
+               </b-form-select>
                <b-form-group
                        id="InputGroup1"
                        label="Email address:"
@@ -132,20 +137,6 @@
                            type="text"
                            v-model="form.name"
                            placeholder="Enter name" />
-               </b-form-group>
-               <b-form-group id="InputGroup5" label="Passport:" label-for="Input5">
-                   <b-form-input
-                           id="Input5"
-                           type="text"
-                           v-model="form.passport"
-                           placeholder="Enter passport" />
-               </b-form-group>
-               <b-form-group id="InputGroup6" label="Inn:" label-for="Input6">
-                   <b-form-input
-                           id="Input6"
-                           type="text"
-                           v-model="form.inn"
-                           placeholder="Enter inn" />
                </b-form-group>
                <b-form-group id="InputGroup7" label="Phone:" label-for="Input7">
                    <b-form-input
@@ -196,6 +187,7 @@
     export default {
         data() {
             return {
+                selectedRole: null,
                 items: items,
                 fields: [
                     { key: 'name', label: 'Person Full name', sortable: true, sortDirection: 'desc' },
@@ -217,13 +209,22 @@
                     email: '',
                     name: '',
                     surname: '',
-                    passport: '',
-                    inn: '',
-                    salary: '',
                     phone: '',
+                    role: this.selectedRole
                 },
                 show: true,
-                visible: false
+                visible: false,
+                options: [
+                    { value: 'PARENT', text: 'Parent' },
+                    { value: 'CHIEF', text: 'Chief' },
+                    { value: 'TEACHER', text: 'Teacher' },
+                    { value: 'BABYSITTER', text: 'Babysitter' },
+                    { value: 'CHILD', text: 'Child' },
+                    { value: 'COOKER', text: 'Cooker' },
+                    { value: 'DOCTOR', text: 'Doctor' },
+                    { value: 'SECURITY', text: 'Security' },
+                    { value: 'EDUCATOR', text: 'Educator' },
+                ]
             }
         },
         computed: {
@@ -251,9 +252,6 @@
                 this.form.email = ''
                 this.form.name = ''
                 this.form.surname = ''
-                this.form.inn = ''
-                this.form.passport = ''
-                this.form.salary = ''
                 this.form.phone = ''
                 /* Trick to reset/clear native browser form validation state */
                 this.show = false

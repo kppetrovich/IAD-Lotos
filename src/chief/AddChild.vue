@@ -35,17 +35,19 @@
                         placeholder="Enter name" />
             </b-form-group>
             <template>
-                <div>Group:</div>
+                <div>Group: {{this.form.group.id}}</div>
                 <div>
                     <b-form-select v-model="form.group.id" :options="options" :select-size="4"></b-form-select>
                 </div>
             </template>
-            <div>Parent 1:</div>
+            <div>Parent 1: {{this.form.parent1.id}}</div>
             <b-button v-on:click="loadSearchOfParent(1)"> Set the first parent</b-button>
             <div v-if="isSearchOfParent1"><SearchOfParent what="first"></SearchOfParent></div>
-            <div>Parent 2:</div>
+            <div>Parent 2: {{this.form.parent1.id}} </div>
             <b-button v-on:click="loadSearchOfParent(2)"> Set the second parent</b-button>
             <div v-if="isSearchOfParent2"><SearchOfParent what="second"></SearchOfParent></div>
+            <br>
+            <br>
             <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
         </b-form>
