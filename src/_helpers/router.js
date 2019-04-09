@@ -76,7 +76,7 @@ export const router = new Router({
                     path: 'Search', component: Search,
                     path: 'MedicalBooks', component: MedicalBooks
                 }
-            ]}
+            ]},
             ]});
 
 router.beforeEach((to, from, next) => {
