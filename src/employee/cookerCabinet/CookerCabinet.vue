@@ -62,7 +62,7 @@
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
-    import Messages from "../../chief/Messages";
+    import Messages from "../../_services/Messages";
     import AddMenu from "../cookerCabinet/AddMenu"
     import Delivery from"../cookerCabinet/Delivery"
     Vue.component('b-button-toolbar', BButtonToolbar);
