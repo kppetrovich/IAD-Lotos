@@ -29,7 +29,6 @@ export const router = new Router({
     routes: [
         { path: '/HomePage', component: HomePage},
         { path: '/login', component: LoginPage },
-        { path: '*', redirect: '/' },
         {path: '/ChiefCabinet', component: ChiefCabinet, children: [{
                 path: 'AddParent', component: AddParent,
                 path: 'AddChild', component: AddEmployee,
@@ -80,15 +79,15 @@ export const router = new Router({
             ]});
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/'];
+    const publicPages = ['/login'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
-   /* if (authRequired && !loggedIn) {
+    if (authRequired && !loggedIn) {
         return next({
             path: '/login',
             query: { returnUrl: to.path }
         });
-    } */
+    }
 
     next();
 })

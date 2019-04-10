@@ -13,8 +13,22 @@ function setRole(data) {
 function getURL() {
     if(localStorage.getItem('role')==='CHIEF'){
     return '/ChiefCabinet'}
-    else{return '/'}
-
+    if(localStorage.getItem('role')==='PARENT'){
+        return '/ParentCabinet'}
+    if(localStorage.getItem('role')==='CHILD'){
+        return '/ChildCabinet'}
+    if(localStorage.getItem('role')==='BABYSITTER'){
+        return '/BabysitterCabinet'}
+    if(localStorage.getItem('role')==='COOKER'){
+        return '/CookerCabinet'}
+    if(localStorage.getItem('role')==='DOCTOR'){
+        return '/DoctorCabinet'}
+    if(localStorage.getItem('role')==='EDUCATOR'){
+        return '/EducatorCabinet'}
+    if(localStorage.getItem('role')==='SECURITY'){
+        return '/SecurityCabinet'}
+    if(localStorage.getItem('role')==='TEACHER'){
+        return '/TeacherCabinet'}
 }
 function setToken(data){
     localStorage.setItem('token', data.token);

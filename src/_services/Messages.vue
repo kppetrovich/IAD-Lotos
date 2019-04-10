@@ -9,9 +9,30 @@
             <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
             <link rel="stylesheet" href="https://afeld.github.io/emoji-css/emoji.css" />
         </head>
+        <div><vc-layout :spacing="spacing">
+            <vc-col :span="5">
+                <vc-toolbar narrow>
+                    <vc-toolbar-title>Users</vc-toolbar-title>
+                </vc-toolbar>
+                <vc-select
+                        searchable
+                        color="primary"
+                        @input="input"
+                        name="select-2"
+                        v-model="model2"
+                        :items="select2"
+                style="height: 45px">
+                </vc-select>
+                <vc-list>
+                    <vc-list-item v-for="i in 9" :key="i" :avatar="`https://placekitten.com/g/30/30`" icon="account_circle" @click="selectFromList(i)">
+                        <vc-list-item-primary-text>User {{ i }}</vc-list-item-primary-text>
+                        <vc-list-item-secondary-text>Admin</vc-list-item-secondary-text>
+                    </vc-list-item>
+                </vc-list>
+            </vc-col>
+            <vc-col :span="19" :spacing="spacing">
         <div :style="{width: 300}" :class="['elevation-5']">
             <vc-toolbar narrow>
-                <vc-toolbar-icon-left icon="menu" />
                 <vc-toolbar-title>Chat with random user</vc-toolbar-title>
                 <vc-toolbar-controls-right>
                     <vc-button color="primary" icon-button>
@@ -35,6 +56,9 @@
                         name=this.name />
             </form>
         </div>
+            </vc-col>
+        </vc-layout>
+    </div>
     </div>
 </template>
 <script>
@@ -46,8 +70,9 @@
     export default {
         data(){
             return{
+                model2: '',
                 chat:'',
-                name:'Jonh',
+                name:'Martin',
                 transcript:{
                     "items": [
                         {
@@ -81,7 +106,15 @@
                             "color": "yellow"
                         }
                     ]
-                }
+                },
+                select2:
+                [{
+                    label: 'B.C. Rich',
+                    value: 'bcrich'
+                }, {
+                label: 'Jackson',
+                    value: 'jackson'
+            }]
 
             }
         },
@@ -92,8 +125,12 @@
                 item.timestamp=1519309075;
                 item.body="Your type: " + this.chat;
                 item.avatar="https://placekitten.com/g/30/30";
-                item.color="yellow";
+                item.color="primary"
+                item.me= true;
                 this.transcript.items.push(item);
+            },
+            selectFromList: function (key) {
+                console.log(this.model2)
             }
         }
     }

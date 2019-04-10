@@ -60,7 +60,6 @@
     import nav_bar from '../educator/nav-bar.vue'
     import BContainer from 'bootstrap-vue/es/components/layout/container'
     import GradeBook from '../educator/GradeBook.vue'
-    import EditGroup from '../educator/EditGroup.vue'
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
@@ -83,7 +82,7 @@
             Messages,
             nav_bar,
             Search,
-            GradeBook
+            GradeBook,
         },
         methods: {
             loadView(selected) {

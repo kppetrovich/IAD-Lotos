@@ -15,7 +15,7 @@
                             img-top
                     >
 
-                        <h4 slot="header">Black granny</h4>
+                        <h4 slot="header">Parent</h4>
 
                         <b-card-body>
                             <b-card-title>Card Title</b-card-title>
