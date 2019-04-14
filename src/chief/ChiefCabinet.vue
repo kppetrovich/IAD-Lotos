@@ -67,6 +67,7 @@
     import AddGroup from '../chief/AddGroup'
     import BContainer from 'bootstrap-vue/es/components/layout/container'
     import AddPlace from '../chief/AddPlace'
+    import ManageGroups from '../chief/ManageGroups'
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
@@ -94,7 +95,8 @@
             AddItem,
             Search,
             AddGroup,
-            AddPlace
+            AddPlace,
+            ManageGroups
         },
         methods: {
             loadView(selected) {

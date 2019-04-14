@@ -13,22 +13,10 @@
                         required
                         placeholder="Enter name" />
             </b-form-group>
-            <b-form-group
-                    id="InputGroup2"
-                    label="Expiration date:"
-                    label-for="Input1"
-            >
-                <b-form-input
-                        id="Input2"
-                        type="text"
-                        v-model="form.expirationDate"
-                        required
-                        placeholder="Enter expiration date" />
-            </b-form-group>
-            <div>
-                <b-form-select v-model="this.form.place" :options="options" :select-size="4"></b-form-select>
-                <div class="mt-3">Selected place: <strong>{{ selected }}</strong></div>
-            </div>
+            <vc-switcher color="primary" id="id-2" name="switch-2" v-model="form.speech">Speech</vc-switcher>
+            <br/>
+            <vc-switcher color="primary" id="id-2" name="switch-2" v-model="form.intellectual">Intellectual</vc-switcher>
+            <br/>
             <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
         </b-form>
@@ -44,8 +32,8 @@
                 isGotResponse:false,
                 form: {
                     name: "",
-                    expirationDate: '',
-                    place: null,
+                    intellectual: false,
+                    speech: false,
                 }, show: true,
                 options: [{
                     value: null, text: 'Please, select the place'
@@ -66,7 +54,7 @@
                     body: JSON.stringify(this.form)
                 };
 
-                return fetch(`${config.apiUrl}/`, requestOptions)
+                return fetch(`${config.apiUrl}/registration/group`, requestOptions)
                     .then(this.handleResponse).then(this.setResponse);
 
             },
@@ -74,8 +62,8 @@
                 evt.preventDefault()
                 /* Reset our form values */
                 this.form.name = ''
-                this.form.place=null
-                this.form.expirationDate=''
+                this.form.speach=false
+                this.form.intellectual=false
                 this.gottenResponse=''
                 this.isGotResponse=false
                 /* Trick to reset/clear native browser form validation state */
@@ -126,13 +114,10 @@
                 this.isGotResponse=true;
             }
         },
-        mounted() {
-            this.askForPlaces();
-        }
 
     }
 </script>
 
 <style scoped>
 
-</style>
+</style>z

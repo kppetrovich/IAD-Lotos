@@ -66,7 +66,7 @@
                             body: JSON.stringify(this.form)
                         };
 
-                        return fetch(`${config.apiUrl}/`, requestOptions)
+                        return fetch(`${config.apiUrl}/registration/item`, requestOptions)
                             .then(this.handleResponse).then(this.setResponse);
 
                     },

@@ -20,6 +20,7 @@
                             <b-dropdown-item href="#" @click.prevent="loadAddGroup">Group</b-dropdown-item>
                             <b-dropdown-item href="#" @click.prevent="loadAddPlace">Place</b-dropdown-item>
                         </b-dropdown>
+                        <b-button class="my-2 my-sm-0" @click.prevent="loadManageGroups">Manage Groups</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadSearch">Search</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadMessages">Messages</b-button>
                     </div>
@@ -75,6 +76,9 @@
             },
             loadAddPlace: function () {
                 EventBus.$emit('load', 'AddPlace')
+            },
+            loadManageGroups: function () {
+                EventBus.$emit('load', 'ManageGroups')
             }
         }
 
