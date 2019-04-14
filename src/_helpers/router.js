@@ -21,6 +21,7 @@ import AddParent from '../chief/AddParent.vue';
 import Search from '../_services/Search';
 import HomePage from '../home/HomePage.vue';
 import LoginPage from '../login/LoginPage.vue';
+import ChildCabinet from '../child/ChildCabinet'
 
 Vue.use(Router);
 
@@ -74,6 +75,12 @@ export const router = new Router({
                     path: 'Messages', component: Messages,
                     path: 'Search', component: Search,
                     path: 'MedicalBooks', component: MedicalBooks
+                }
+            ]},
+        {path: '/ChildCabinet', component: ChildCabinet, children: [
+                {
+                    path: 'Messages', component: Messages,
+                    path: 'Search', component: Search,
                 }
             ]},
             ]});

@@ -43,13 +43,21 @@
             <div>Parent 1: {{this.form.parent1.id}}</div>
             <b-button v-on:click="loadSearchOfParent(1)"> Set the first parent</b-button>
             <div v-if="isSearchOfParent1"><SearchOfParent what="first"></SearchOfParent></div>
-            <div>Parent 2: {{this.form.parent1.id}} </div>
+            <div>Parent 2: {{this.form.parent2.id}} </div>
             <b-button v-on:click="loadSearchOfParent(2)"> Set the second parent</b-button>
             <div v-if="isSearchOfParent2"><SearchOfParent what="second"></SearchOfParent></div>
             <br>
             <br>
             <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
+            <div v-if="isGotResponse">
+                <div v-if="gottenResponse==='Success'">
+                    <b-alert show variant="success">{{gottenResponse}}</b-alert>
+                </div>
+                <div v-if="gottenResponse!='Success'">
+                    <b-alert show variant="danger">{{gottenResponse}}</b-alert>
+                </div>
+            </div>
         </b-form>
     </div>
 </template>
@@ -61,8 +69,10 @@
     export default {
         data() {
             return {
+                gottenResponse: '',
                 isSearchOfParent1: false,
                 isSearchOfParent2: false,
+                isGotResponse: false,
                 form: {
                     client:{
                         username: '',
@@ -95,8 +105,31 @@
                     body: JSON.stringify(this.form)
                 };
 
-                return fetch(`${config.apiUrl}/registration/children`, requestOptions)
+                return fetch(`${config.apiUrl}/registration/child`, requestOptions)
+                    .then(this.handleResponse).then(this.setResponse);
 
+            },
+            handleResponse(response) {
+                const error= "Success"
+                if (!response.ok) {
+                    if (response.status === 409) {
+                        const error = "Username already exists";
+                        return error
+                    }
+                    if (response.status === 401) {
+                        const error = "Someone uses your account, try again later";
+                        return error
+                    }
+                    if (response.status === 403) {
+                        const error = 'Не лазь, ***** *****, оно тебя сожрет ';
+                        return error
+                    }}
+
+                return error;
+            },
+            setResponse(response){
+                this.gottenResponse=response;
+                this.isGotResponse=true;
             },
             onReset(evt) {
                 evt.preventDefault()
