@@ -4,8 +4,8 @@
             <b-form-group
                     id="InputGroup1"
                     label="Name:"
-                    label-for="Input1"
-            >
+                    label-for="Input1">
+
                 <b-form-input
                         id="Input1"
                         type="text"
@@ -13,24 +13,16 @@
                         required
                         placeholder="Enter name" />
             </b-form-group>
-            <b-form-group
-                    id="InputGroup2"
-                    label="Expiration date:"
-                    label-for="Input1"
-            >
-                <b-form-input
-                        id="Input2"
-                        type="text"
-                        v-model="form.expirationDate"
-                        required
-                        placeholder="Enter expiration date" />
-            </b-form-group>
-            <div>
-                <b-form-select v-model="this.form.place" :options="options" :select-size="4"></b-form-select>
-                <div class="mt-3">Selected place: <strong>{{ selected }}</strong></div>
-            </div>
             <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
+            <div v-if="isGotResponse">
+                <div v-if="gottenResponse==='Success'">
+                    <b-alert show variant="success">{{gottenResponse}}</b-alert>
+                </div>
+                <div v-if="gottenResponse!='Success'">
+                    <b-alert show variant="danger">{{gottenResponse}}</b-alert>
+                </div>
+            </div>
         </b-form>
     </div>
 </template>
@@ -38,18 +30,14 @@
 <script>
     import config from 'config';
     export default {
+
         data() {
             return {
-                gottenResponse:'',
-                isGotResponse:false,
+                gottenResponse: '',
+                isGotResponse: false,
                 form: {
                     name: "",
-                    expirationDate: '',
-                    place: null,
-                }, show: true,
-                options: [{
-                    value: null, text: 'Please, select the place'
-                }]
+                }, show: true
             }
         },
         methods: {
@@ -66,42 +54,22 @@
                     body: JSON.stringify(this.form)
                 };
 
-                return fetch(`${config.apiUrl}/`, requestOptions)
+                return fetch(`${config.apiUrl}/registration/place`, requestOptions)
                     .then(this.handleResponse).then(this.setResponse);
 
             },
             onReset(evt) {
                 evt.preventDefault()
                 /* Reset our form values */
-                this.form.name = ''
-                this.form.place=null
-                this.form.expirationDate=''
-                this.gottenResponse=''
-                this.isGotResponse=false
+                this.form.name = '';
+                this.gottenResponse='';
+                this.isGotResponse=false;
+
                 /* Trick to reset/clear native browser form validation state */
                 this.show = false
                 this.$nextTick(() => {
                     this.show = true
                 })
-            },
-            askForPlaces(){
-                const requestOptions = {
-                    method: 'POST',
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('token'),
-                        'Content-Type': 'application/json'
-                    },
-                    mode: 'cors',
-                    body: '{}'
-                };
-
-                return fetch(`${config.apiUrl}/find/place`, requestOptions)
-                    .then(this.handleAskForPlaces);
-            },
-            handleAskForPlaces(response){
-                response.text().then(text => {
-                    this.options = this.options.concat(JSON.parse(text));
-                });
             },
             handleResponse(response) {
                 const error= "Success"
@@ -125,9 +93,6 @@
                 this.gottenResponse=response;
                 this.isGotResponse=true;
             }
-        },
-        mounted() {
-            this.askForPlaces();
         }
 
     }

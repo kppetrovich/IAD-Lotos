@@ -17,6 +17,8 @@
                             <b-dropdown-item href="#" @click.prevent="loadAddChild">Child</b-dropdown-item>
                             <b-dropdown-item href="#" @click.prevent="loadAddItem">Item</b-dropdown-item>
                             <b-dropdown-item href="#" @click.prevent="loadAddEmployee">Employee</b-dropdown-item>
+                            <b-dropdown-item href="#" @click.prevent="loadAddGroup">Group</b-dropdown-item>
+                            <b-dropdown-item href="#" @click.prevent="loadAddPlace">Place</b-dropdown-item>
                         </b-dropdown>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadSearch">Search</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadMessages">Messages</b-button>
@@ -41,6 +43,7 @@
     import { EventBus } from '../../_services/event-bus.js';
     Vue.use(BootstrapVue)
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
+    import AddPlace from "../AddPlace";
     Vue.component('b-button-toolbar', BButtonToolbar)
     export default {
         data () {
@@ -67,6 +70,12 @@
             loadSearch: function () {
                 EventBus.$emit('load', 'Search')
             },
+            loadAddGroup: function () {
+                EventBus.$emit('load', 'AddGroup')
+            },
+            loadAddPlace: function () {
+                EventBus.$emit('load', 'AddPlace')
+            }
         }
 
     };

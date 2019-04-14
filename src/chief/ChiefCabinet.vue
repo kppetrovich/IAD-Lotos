@@ -64,7 +64,9 @@
     import AddItem from '../chief/AddItem'
     import AddEmployee from '../chief/AddEmployee'
     import nav_menu from '../chief/page_components/nav-menu.vue'
+    import AddGroup from '../chief/AddGroup'
     import BContainer from 'bootstrap-vue/es/components/layout/container'
+    import AddPlace from '../chief/AddPlace'
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
@@ -91,6 +93,8 @@
             AddEmployee,
             AddItem,
             Search,
+            AddGroup,
+            AddPlace
         },
         methods: {
             loadView(selected) {

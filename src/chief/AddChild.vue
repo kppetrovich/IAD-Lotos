@@ -141,6 +141,8 @@
                 this.form.parent2.id=''
                 this.form.client.username=''
                 this.from.client.password=''
+                this.gottenResponse=''
+                this.isGotResponse=false
                 /* Trick to reset/clear native browser form validation state */
                 this.show = false
                 this.$nextTick(() => {
