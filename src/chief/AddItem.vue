@@ -20,17 +20,25 @@
     >
         <b-form-input
                 id="Input2"
-                type="text"
+                type="date"
                 v-model="form.expirationDate"
                 required
                 placeholder="Enter expiration date" />
     </b-form-group>
             <div>
-                <b-form-select v-model="this.form.place" :options="options" :select-size="4"></b-form-select>
-                <div class="mt-3">Selected place: <strong>{{ selected }}</strong></div>
+                <b-form-select v-model="form.place.id" :options="options" :select-size="4"></b-form-select>
+                <div class="mt-3">Selected place: <strong>{{ form.place.id }}</strong></div>
             </div>
         <b-button type="submit" variant="primary">Submit</b-button>
         <b-button type="reset" variant="danger">Reset</b-button>
+            <div v-if="isGotResponse">
+                <div v-if="gottenResponse==='Success'">
+                    <b-alert show variant="success">{{gottenResponse}}</b-alert>
+                </div>
+                <div v-if="gottenResponse!='Success'">
+                    <b-alert show variant="danger">{{gottenResponse}}</b-alert>
+                </div>
+            </div>
         </b-form>
     </div>
 </template>
@@ -43,10 +51,11 @@
                 gottenResponse:'',
                 isGotResponse:false,
                 form: {
+                    place:{id: null},
                     name: "",
                     expirationDate: '',
-                    place: null,
-                }, show: true,
+                },
+                show: true,
                 options: [{
                     value: null, text: 'Please, select the place'
                 }]
@@ -54,7 +63,8 @@
         },
                 methods: {
                     onSubmit(evt) {
-                        evt.preventDefault()
+                        this.form.expirationDate = this.form.expirationDate.toString() + 'T00:00:00.000+03:00';
+                        evt.preventDefault();
 
                         const requestOptions = {
                             method: 'POST',
@@ -74,7 +84,7 @@
                         evt.preventDefault()
                         /* Reset our form values */
                         this.form.name = ''
-                        this.form.place=null
+                        this.form.place.id=null
                         this.form.expirationDate=''
                         this.gottenResponse=''
                         this.isGotResponse=false
@@ -100,7 +110,11 @@
                     },
                    handleAskForPlaces(response){
                        response.text().then(text => {
-                           this.options = this.options.concat(JSON.parse(text));
+                           let jsonString =text;
+                           jsonString = jsonString.replace(/"id":/g, '"value"'+":");
+                           jsonString = jsonString.replace(/"name":/g, '"text"'+":");
+                           this.options=this.options.concat(JSON.parse(jsonString));
+
                        });
                    },
                     handleResponse(response) {
@@ -126,7 +140,7 @@
                         this.isGotResponse=true;
                     }
                 },
-        mounted() {
+        created() {
             this.askForPlaces();
         }
 
