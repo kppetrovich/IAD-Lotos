@@ -23,7 +23,7 @@
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
                 <b-dropdown id="ddown-dropright"  text="User"  class="m-1">
-                    <b-dropdown-item href="#"><router-link to="/BabysitterCabinet">Profile</router-link></b-dropdown-item>
+                    <b-dropdown-item href="#"><router-link to="/ParentCabinet">Profile</router-link></b-dropdown-item>
                     <b-dropdown-item  href="#"><router-link to="/login">Logout</router-link></b-dropdown-item>
                 </b-dropdown>
             </b-navbar-nav>

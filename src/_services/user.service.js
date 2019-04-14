@@ -48,6 +48,7 @@ function login(username, password) {
         .then(user => {
             if (user) {
                 user.authdata = window.btoa(username + ':' + password);
+                localStorage.setItem('username', username);
                 localStorage.setItem('user', JSON.stringify(user));
             }
             return user;
@@ -58,6 +59,7 @@ function logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('username');
 }
 
 

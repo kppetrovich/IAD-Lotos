@@ -54,6 +54,7 @@
 <script>
     import Search from '../_services/Search.vue';
     import { EventBus } from '../_services/event-bus.js';
+    import {router} from "../_services/index";
     import Vue from 'vue'
     import BootstrapVue from 'bootstrap-vue'
     import nav_bar from '../Parent/nav-bar.vue'
@@ -66,10 +67,9 @@
     export default {
         data () {
             return {
-                IsSetMessages: true,
                 user: {},
                 users: [],
-                currentView: 'Messages'
+                currentView: 'Search'
             }
         },
         created () {
@@ -83,6 +83,7 @@
         methods: {
             loadView(selected) {
                 this.currentView = selected;
+                router.push(selected);
             },
         }
     };

@@ -81,7 +81,7 @@
             }
         },
         created () {
-            EventBus.$on('load', this.loadView)
+            EventBus.$on('load', this.loadView);
         },
         components: {
             Messages,
@@ -95,6 +95,7 @@
         methods: {
             loadView(selected) {
                 this.currentView = selected;
+                console.log(localStorage.getItem('user'))
             },
         }
     };
