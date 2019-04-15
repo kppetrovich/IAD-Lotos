@@ -18,6 +18,7 @@
                         <b-button class="my-2 my-sm-0" @click.prevent="loadSearch">Search</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadMessages">Messages</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadGradeBook">Gradebook</b-button>
+                        <b-button class="my-2 my-sm-0" @click.prevent="loadStartGame">Start the fight</b-button>
                     </div>
                 </b-navbar-nav>
 
@@ -55,6 +56,10 @@
             loadGradeBook: function () {
                 EventBus.$emit('load', 'GradeBook')
             },
+            loadStartGame: function () {
+                EventBus.$emit('load', 'StartGame')
+
+            }
         }
 
     };

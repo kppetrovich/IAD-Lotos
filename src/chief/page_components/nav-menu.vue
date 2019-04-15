@@ -23,6 +23,7 @@
                         <b-button class="my-2 my-sm-0" @click.prevent="loadManageGroups">Manage Groups</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadSearch">Search</b-button>
                         <b-button class="my-2 my-sm-0" @click.prevent="loadMessages">Messages</b-button>
+                        <b-button class="my-2 my-sm-0" @click.prevent="loadGame">Fights</b-button>
                     </div>
                 </b-navbar-nav>
 
@@ -79,7 +80,10 @@
             },
             loadManageGroups: function () {
                 EventBus.$emit('load', 'ManageGroups')
-            }
+            },
+            loadGame: function(){
+                EventBus.$emit('load', 'Game')
+    }
         }
 
     };

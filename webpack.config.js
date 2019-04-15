@@ -32,7 +32,7 @@ module.exports = {
     },
     externals: {
         config: JSON.stringify({
-            apiUrl: 'http://192.168.0.104:8080'
+            apiUrl: 'http://ivankayukoff.ru:8180/Service-1.0-SNAPSHOT'
         })
     }
 }

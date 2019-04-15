@@ -51,7 +51,7 @@
                <b-table
                        show-empty
                        stacked="md"
-                       :items="items"
+                       :items="this.peoples"
                        :fields="fields"
                        :current-page="currentPage"
                        :per-page="perPage"
@@ -70,8 +70,8 @@
                    </template>
 
                    <template slot="actions" slot-scope="row">
-                       <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
-                           Info modal
+                       <b-button size="sm" @click="openProfile(row.item, row.index, $event.target)" class="mr-1">
+                           Open Profile
                        </b-button>
                        <b-button size="sm" @click="row.toggleDetails">
                            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
@@ -106,12 +106,13 @@
        </div>
        <div>
            <hr>
-           <b-form @submit.prevent="setVisible" @reset="onReset" v-if="show">
-               <b-form-select v-model="selectedRole" :options="options">
+           <b-form @submit.prevent="onSubmit" @reset="onReset" v-if="show">
+               <b-form-select v-model="form.client.role" :options="options" required>
                    <template slot="first">
                        <option :value="null" disabled>-- Please select role --</option>
                    </template>
                </b-form-select>
+               <br/>
                <b-form-group
                        id="InputGroup1"
                        label="Email address:"
@@ -120,7 +121,7 @@
                    <b-form-input
                            id="Input1"
                            type="email"
-                           v-model="form.email"
+                           v-model="form.client.username"
                            placeholder="Enter email" />
                </b-form-group>
 
@@ -152,50 +153,42 @@
                    </b-form-checkbox-group>
                </b-form-group>
 
-               <b-button type="Search" variant="primary">Submit</b-button>
+               <b-button type="submit" variant="primary">Search</b-button>
                <b-button type="reset" variant="danger">Reset</b-button>
+               <div v-if="isGotResponse">
+                   <div v-if="gottenResponse==='Success'">
+                       <b-alert show variant="success">{{gottenResponse}}</b-alert>
+                   </div>
+                   <div v-if="gottenResponse!='Success'">
+                       <b-alert show variant="danger">{{gottenResponse}}</b-alert>
+                   </div>
+               </div>
            </b-form>
        </div>
 </div>
 </template>
 
 <script>
+    import config from 'config';
     const items = [
-        { isActive: true, age: 40, name: { first: 'Dickerson', last: 'Macdonald' } },
-        { isActive: false, age: 21, name: { first: 'Larsen', last: 'Shaw' } },
-        {
-            isActive: false,
-            age: 9,
-            name: { first: 'Mini', last: 'Navarro' },
-            _rowVariant: 'success'
-        },
-        { isActive: false, age: 89, name: { first: 'Geneva', last: 'Wilson' } },
-        { isActive: true, age: 38, name: { first: 'Jami', last: 'Carney' } },
-        { isActive: false, age: 27, name: { first: 'Essie', last: 'Dunlap' } },
-        { isActive: true, age: 40, name: { first: 'Thor', last: 'Macdonald' } },
-        {
-            isActive: true,
-            age: 87,
-            name: { first: 'Larsen', last: 'Shaw' },
-            _cellVariants: { age: 'danger', isActive: 'warning' }
-        },
-        { isActive: false, age: 26, name: { first: 'Mitzi', last: 'Navarro' } },
-        { isActive: false, age: 22, name: { first: 'Genevieve', last: 'Wilson' } },
-        { isActive: true, age: 38, name: { first: 'John', last: 'Carney' } },
-        { isActive: false, age: 29, name: { first: 'Dick', last: 'Dunlap' } }
+        { phone: '89181825260', username: 'paulk@gmail.com', name: { first: 'Mitzi', last: 'Navarro' } },
+
     ]
     export default {
         data() {
             return {
-                selectedRole: null,
                 items: items,
                 fields: [
-                    { key: 'name', label: 'Person Full name', sortable: true, sortDirection: 'desc' },
-                    { key: 'age', label: 'Person age', sortable: true, class: 'text-center' },
-                    { key: 'isActive', label: 'is Active' },
+                    { key: 'name', label: 'Person Full name', sortable: true},
+                    { key: 'phone', label: 'Person phone number', sortable: true, class: 'text-center' },
+                    { key: 'username', label: 'Person email', sortable: true },
                     { key: 'actions', label: 'Actions' }
                 ],
+                peoples:[{}],
+
                 currentPage: 1,
+                gottenResponse: '',
+                isGotResponse: false,
                 perPage: 5,
                 totalRows: items.length,
                 pageOptions: [5, 10, 15],
@@ -203,14 +196,14 @@
                 sortDesc: false,
                 sortDirection: 'asc',
                 filter: null,
+                urlForAsk: '',
                 modalInfo: { title: '', content: '' }
                 ,
                 form: {
-                    email: '',
+                    client:{ username: '', role: null},
                     name: '',
                     surname: '',
                     phone: '',
-                    role: this.selectedRole
                 },
                 show: true,
                 visible: false,
@@ -242,24 +235,94 @@
                 this.visible = true;
 
             },
+            setUrl: function(){
+                if(this.form.client.role=='PARENT'){
+                    this.urlForAsk='/find/parent';}
+                if(this.form.client.role=='CHIEF'){
+                    this.urlForAsk='/find/employee';}
+                if(this.form.client.role=='CHILD'){
+                    this.urlForAsk='/find/child';}
+                if(this.form.client.role=='TEACHER'){
+                    this.urlForAsk='/find/employee';}
+                if(this.form.client.role=='BABYSITTER'){
+                    this.urlForAsk='/find/employee';}
+                if(this.form.client.role=='COOKER'){
+                    this.urlForAsk='/find/employee';}
+                if(this.form.client.role=='DOCTOR'){
+                    this.urlForAsk='/find/employee';}
+                if(this.form.client.role=='SECURITY'){
+                    this.urlForAsk='/find/employee';}
+                if(this.form.client.role=='EDUCATOR'){
+                    this.urlForAsk='/find/employee';}
+            },
             onSubmit(evt) {
-                evt.preventDefault()
-                JSON.stringify(this.form)
+                this.setUrl();
+                evt.preventDefault();
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('token'),
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors',
+                    body: JSON.stringify(this.form)
+                };
+
+                return fetch(`${config.apiUrl}${this.urlForAsk}`, requestOptions)
+                    .then(this.handleResponse).then(this.setResponse).then(this.setVisible);
+
+            },
+            handleResponse(response) {
+                const error= "Success"
+                response.text().then(text => {
+                    this.peoples=JSON.parse(text).map(element=> {
+                        return {
+                            id: element.id,
+                           phone: element.phoneNumber,
+                            username: element.client.username,
+                            name:{
+                               first: element.name,
+                                last: element.surname
+                            }
+                        }
+                    })
+                });
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        const error = "Someone uses your account, try again later";
+                        return error
+                    }
+                    if (response.status === 403) {
+                        const error = 'Не лазь, ***** *****, оно тебя сожрет ';
+                        return error
+                    }}
+
+                return error;
+            },
+            setResponse(response){
+                this.gottenResponse=response;
+                this.isGotResponse=true;
             },
             onReset(evt) {
                 evt.preventDefault()
                 /* Reset our form values */
-                this.form.email = ''
-                this.form.name = ''
-                this.form.surname = ''
-                this.form.phone = ''
+                this.form.email = '';
+                this.form.name = '';
+                this.form.surname = '';
+                this.form.phone = '';
+                this.peoples=[];
+                this.form.client.role=null
+                this.gottenResponse='';
+                this.isGotResponse=false;
+                this.visible=false
+                this.urlForAsk=''
                 /* Trick to reset/clear native browser form validation state */
                 this.show = false
                 this.$nextTick(() => {
                     this.show = true
                 })
             },
-            info(item, index, button) {
+            openProfile(item, index, button) {
                 this.modalInfo.title = `Row index: ${index}`
                 this.modalInfo.content = JSON.stringify(item, null, 2)
                 this.$root.$emit('bv::show::modal', 'modalInfo', button)

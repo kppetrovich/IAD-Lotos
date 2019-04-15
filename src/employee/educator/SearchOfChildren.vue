@@ -17,7 +17,7 @@
         </v-card-title>
         <v-data-table
                 :headers="headers"
-                :items="parents"
+                :items="childs"
                 :search="search"
         >
             <template v-slot:items="props">
@@ -51,7 +51,7 @@
                     {text: 'Surname', value: 'surname'},
                     {text: 'Phone Number', value: 'phoneNumber', sortable: true},
                 ],
-                parents: [
+                childs: [
 
                 ]
             }
@@ -68,7 +68,6 @@
                     EventBus.$emit('setId2', this.id);
                     this.id='';
                     this.search=''
-                    this.search=''
                 }
             },
             sendRequest() {
@@ -82,12 +81,12 @@
                     body: '{}'
                 };
 
-                return fetch(`${config.apiUrl}/find/parent`, requestOptions)
+                return fetch(`${config.apiUrl}/find/child`, requestOptions)
                     .then(this.handleResponse);
             },
             handleResponse(response) {
                 response.text().then(text => {
-                    this.parents = this.parents.concat(JSON.parse(text));
+                    this.childs = this.childs.concat(JSON.parse(text));
                 });
             }
         },

@@ -44,7 +44,7 @@
                             <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom />
                         </b-card></b-col>
                         <b-col cols="9" style="position: inherit !important;">
-                            <component :is="currentView"></component>
+                            <component  :is="currentView"></component>
 
                         </b-col>
                     </b-row>
@@ -68,6 +68,7 @@
     import BContainer from 'bootstrap-vue/es/components/layout/container'
     import AddPlace from '../chief/AddPlace'
     import ManageGroups from '../chief/ManageGroups'
+    import Game from '../_services/Game'
     Vue.component('b-container', BContainer)
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
@@ -96,12 +97,12 @@
             Search,
             AddGroup,
             AddPlace,
-            ManageGroups
+            ManageGroups,
+            Game
         },
         methods: {
             loadView(selected) {
                 this.currentView = selected;
-                console.log(localStorage.getItem('user'))
             },
         }
     };
