@@ -73,6 +73,7 @@
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
     import Messages from "../_services/Messages";
+    import Wallets from "../chief/Wallets"
     Vue.component('b-button-toolbar', BButtonToolbar);
     export default {
         data () {
@@ -98,7 +99,8 @@
             AddGroup,
             AddPlace,
             ManageGroups,
-            Game
+            Game,
+            Wallets
         },
         methods: {
             loadView(selected) {

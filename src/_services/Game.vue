@@ -16,24 +16,6 @@
                         <template v-slot:icon>
                             <span>JL</span>
                         </template>
-                        <v-text-field
-                                v-model="input"
-                                hide-details
-                                flat
-                                label="Leave a comment..."
-                                solo
-                                @keydown.enter="comment"
-                        >
-                            <template v-slot:append>
-                                <v-btn
-                                        class="mx-0"
-                                        depressed
-                                        @click="comment"
-                                >
-                                    Post
-                                </v-btn>
-                            </template>
-                        </v-text-field>
                     </v-timeline-item>
 
                     <v-slide-x-transition

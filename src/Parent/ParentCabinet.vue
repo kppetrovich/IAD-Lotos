@@ -63,6 +63,7 @@
     Vue.use(BootstrapVue);
     import BButtonToolbar from 'bootstrap-vue/es/components/button-toolbar/button-toolbar'
     import Messages from "../_services/Messages";
+    import Game from "../_services/Game"
     Vue.component('b-button-toolbar', BButtonToolbar);
     export default {
         data () {
@@ -78,7 +79,8 @@
         components: {
             Messages,
             nav_bar,
-            Search
+            Search,
+            Game
         },
         methods: {
             loadView(selected) {

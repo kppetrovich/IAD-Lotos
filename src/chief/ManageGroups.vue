@@ -16,7 +16,6 @@
     <vc-select
             searchable
             color="primary"
-            label="Please, select the group"
             name="select-2"
             v-model="selectedGroup"
             :items="select2">
