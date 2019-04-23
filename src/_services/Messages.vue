@@ -63,6 +63,7 @@
     </div>
 </template>
 <script>
+    import config from 'config'
     import Vue from 'vue'
     import Vuecidity from 'vuecidity'
     import '../../node_modules/vuecidity/dist/lib/vuecidity.min.css'
@@ -132,7 +133,33 @@
             },
             selectFromList: function (key) {
                 console.log(this.model2)
-            }
+            },
+            sendRequest: function() {
+                let formss = {
+                    id: '1'
+                }
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('token'),
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors',
+                    body: JSON.stringify(this.formss)
+                };
+
+                return fetch(`${config.apiUrl}/message/get`, requestOptions)
+                    .then(this.handleResponse);
+            },
+            handleResponse(response) {
+                response.text().then(text => {
+                    console.log(text);
+                });
+            },
+        },
+
+        mounted() {
+            this.sendRequest();
         }
     }
 </script>

@@ -105,6 +105,7 @@
 </template>
 
 <script>
+    import config from 'config';
     import Vue from 'vue'
     import Vuecidity from 'vuecidity'
     import '../../node_modules/vuecidity/dist/lib/vuecidity.min.css'
@@ -276,7 +277,29 @@
                     this.desserts.push(this.editedItem)
                 }
                 this.close()
+            },
+            sendRequest: function() {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('token'),
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors',
+                    body: '{}'
+                };
+
+                return fetch(`${config.apiUrl}/type-group/get-all`, requestOptions)
+                    .then(this.handleResponse);
+            },
+            handleResponse(response) {
+                response.text().then(text => {
+                    this.parents = this.parents.concat(JSON.parse(text));
+                });
             }
+        },
+        mounted() {
+            this.sendRequest();
         }
     }
 </script>

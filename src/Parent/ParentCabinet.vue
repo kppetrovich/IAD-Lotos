@@ -65,6 +65,7 @@
     import Messages from "../_services/Messages";
     import Game from "../_services/Game"
     Vue.component('b-button-toolbar', BButtonToolbar);
+    import Bets from "../Parent/Bets"
     export default {
         data () {
             return {
@@ -80,12 +81,12 @@
             Messages,
             nav_bar,
             Search,
-            Game
+            Game,
+            Bets
         },
         methods: {
             loadView(selected) {
                 this.currentView = selected;
-                router.push(selected);
             },
         }
     };

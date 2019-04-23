@@ -66,16 +66,16 @@
             },
             handleResponse(response) {
                 response.text().then(text => {
-                    this.fightingLog = this.fightingLog.concat(JSON.parse(text));
+                    console.log(text)
                 });
             },
             setResponse(response){
-                this.gottenResponse=response;
+               /* this.gottenResponse=response;
                 this.isGotResponse=true;
                 let jsonLog=JSON.stringify(this.fightingLog);
                 jsonLog=JSON.parse(jsonLog);
                 this.fightingLog=jsonLog[0]['hitList']
-                console.log(this.fightingLog)
+                console.log(this.fightingLog) */
             },
             onReset(evt) {
                 evt.preventDefault()

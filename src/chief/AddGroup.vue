@@ -54,7 +54,7 @@
                     body: JSON.stringify(this.form)
                 };
 
-                return fetch(`${config.apiUrl}/registration/group`, requestOptions)
+                return fetch(`${config.apiUrl}/type-group/create`, requestOptions)
                     .then(this.handleResponse).then(this.setResponse);
 
             },

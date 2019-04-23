@@ -54,7 +54,9 @@
             fightingLog: [],
             isGotResponse: false,
             gottenResponse: '',
-            polling: null
+            polling: null,
+            radiantName: '',
+            direName: '',
         }),
 
         computed: {
@@ -76,7 +78,7 @@
                 }
                 this.events.push({
                     id: ++this.nonce,
-                    text: "Damage value: "+ this.fightingLog[this.nonce].damage + " was taken by "+ this.fightingLog[this.nonce].hitDirection,
+                    text: "Damage value: "+ this.fightingLog[this.nonce].damage + " was taken by "+ this.fightingLog[this.nonce].hitDirection.replace("TO_DIRE", this.direName).replace("TO_RADIANT", this.radiantName),
                     time: time.replace(/:\d{2}\sGMT-\d{4}\s\((.*)\)/, (match, contents, offset) => {
                         return ` ${contents.split(' ').map(v => v.charAt(0)).join('')}`
                     })
@@ -98,12 +100,16 @@
             },
             handleGameLog(response){
                 response.text().then(text => {
+
                     this.fightingLog = this.fightingLog.concat(JSON.parse(text));
+                    console.log(this.fightingLog[0]['dire'].name);
+                    this.direName=this.fightingLog[0]['dire'].name;
+                    console.log(this.fightingLog[0]['radiant'].name);
+                    this.radiantName=this.fightingLog[0]['radiant'].name;
                     this.fightingLog=this.fightingLog[0]['hitList']
                     for (let i = 0; i < this.fightingLog.length; i++) {
                         this.fightingLog[i]['id'] = i;
                     }
-                    console.log(JSON.stringify(this.fightingLog))
                 });
             },
             setResponse(response){
